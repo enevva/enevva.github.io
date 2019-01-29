@@ -8,8 +8,8 @@
 	<script>
 		!function(){
 			   let audio = document.querySelector("audio");
-			navigator.mediaDevices.getUserMedia().then(stream=>{
-				console.log(stream);	
+			navigator.mediaDevices.enumerateDevices().then(devices=>{
+				console.log(devices);	
 			}).catch(error=>{
 				console.log(error)
 			})
