@@ -8,12 +8,13 @@
 	<audio src="/assets/dollys_prtb.mp3" controls></audio>
 	<script>
 		!function(){
+			const mediaFile = '/assets/dollys_prtb.mp3';
 			const audio = document.querySelector('audio');
 			const select = document.querySelector('select');
-			const devices = navigator.mediaDevices.enumerateDevices().then(devices=>{
-				let option;
-				devices.forEach(device=>{
-					option = document.createElement('option');
+			navigator.mediaDevices.enumerateDevices().then(devices=>{
+				const audioDevices = devices.filter(device => device.kind === 'audiooutput');
+				audioDevices.forEach(device=>{
+					let option = document.createElement('option');
 					option.value = device.deviceId;
 					option.text = '[' + device.kind + '] ' + device.label;
 					select.appendChild(option);
@@ -21,8 +22,13 @@
 			}).catch(error=>{
 				console.log(error);
 			});
+
 			select.onchange = e => {
-				audio.setSinkId(this.value).then(result=>{
+				audio.pause();
+				const newAudio = document.createElement('audio');
+				newAudio.setSinkId(this.value).then(result=>{
+					newAudio.src = mediaFile;
+					document.replaceChild(newAudio, audio);
 					console.log(result);
 				}).catch(error=>{
 					console.log(error);
