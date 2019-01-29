@@ -4,15 +4,27 @@
 	<meta charset="utf8">
 </head>
 <body>
+	<select name="devices" id="devices"></select>
 	<audio src="/assets/dollys_prtb.mp3" controls></audio>
 	<script>
 		!function(){
-			   let audio = document.querySelector("audio");
-			navigator.mediaDevices.enumerateDevices().then(devices=>{
-				console.log(devices);	
-			}).catch(error=>{
+			const audio = document.querySelector('audio');
+			const select = document.querySelector('select');
+			const devices = await navigator.mediaDevices.enumerateDevices().catch(error=>{
 				console.log(error)
+			});
+			let option;
+			devices.forEach(device=>{
+				option = document.createElement('option');
+				option.value = device.deviceId;
+				option.text = '[' + device.kind + '] ' + device.label;
+				select.appendChild(option);
 			})
+			select.onchange = e => {
+				await audio.setSinkId(this.value).catch(error => {
+					console.log(error)
+				});
+			};
 		}();
 	</script>
 </body>
