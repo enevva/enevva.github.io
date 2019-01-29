@@ -12,8 +12,7 @@
 			const audio = document.querySelector('audio');
 			const select = document.querySelector('select');
 			navigator.mediaDevices.enumerateDevices().then(devices=>{
-				const audioDevices = devices.filter(device => device.kind === 'audiooutput');
-				audioDevices.forEach(device=>{
+				devices.filter(device => device.kind === 'audiooutput').forEach(device=>{
 					let option = document.createElement('option');
 					option.value = device.deviceId;
 					option.text = '[' + device.kind + '] ' + device.label;
