@@ -1,1 +1,19 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+</head>
+<body>
+	<audio src="/assets/dollys_prtb.mp3" controls></audio>
+	<script>
+		!function(){
+			   let audio = document.querySelector("audio");
+			navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+				console.log(stream);	
+			}).catch(error=>{
+				console.log(error)
+			})
+		}();
+	</script>
+</body>
+</html>
