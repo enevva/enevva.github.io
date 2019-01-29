@@ -10,21 +10,24 @@
 		!function(){
 			const audio = document.querySelector('audio');
 			const select = document.querySelector('select');
-			const devices = await navigator.mediaDevices.enumerateDevices().catch(error=>{
-				console.log(error)
+			const devices = navigator.mediaDevices.enumerateDevices().then(devices=>{
+				let option;
+				devices.forEach(device=>{
+					option = document.createElement('option');
+					option.value = device.deviceId;
+					option.text = '[' + device.kind + '] ' + device.label;
+					select.appendChild(option);
+				})
+			}).catch(error=>{
+				console.log(error);
 			});
-			let option;
-			devices.forEach(device=>{
-				option = document.createElement('option');
-				option.value = device.deviceId;
-				option.text = '[' + device.kind + '] ' + device.label;
-				select.appendChild(option);
-			})
 			select.onchange = e => {
-				await audio.setSinkId(this.value).catch(error => {
-					console.log(error)
-				});
-			};
+				audio.setSinkId(this.value).then(result=>{
+					console.log(result);
+				}).catch(error=>{
+					console.log(error);
+				})
+			}
 		}();
 	</script>
 </body>
