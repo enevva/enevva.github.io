@@ -25,7 +25,7 @@
 			select.onchange = e => {
 				audio.pause();
 				const newAudio = document.createElement('audio');
-				newAudio.setSinkId(this.value).then(result=>{
+				newAudio.setSinkId(e.currentTarget.value).then(result=>{
 					newAudio.src = mediaFile;
 					document.replaceChild(newAudio, audio);
 					console.log(result);
