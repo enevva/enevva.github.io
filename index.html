@@ -25,11 +25,8 @@
 				const audio = document.querySelector('audio');
 				audio.pause();
 				audio.currentTime = 0;
-				const newAudio = document.createElement('audio');
-				newAudio.setSinkId(e.currentTarget.value).then(result=>{
-					newAudio.src = mediaFile;
-					audio.parentNode.replaceChild(newAudio, audio);
-					console.log(result);
+				newAudio.setSinkId(e.currentTarget.value).then(()=>{
+					console.log('set ' + audio.sinkId);
 				}).catch(error=>{
 					console.log(error);
 				})
